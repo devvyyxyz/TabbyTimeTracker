@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome – Tab Time Tracker</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    body {
+      font-family: system-ui,sans-serif;
+      background: #f8fafc;
+      color: #1a222c;
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 44px 18px;
+    }
+    .section {
+      background: #fff;
+      border-radius: 13px;
+      box-shadow: 0 2px 12px #a4c6ee33;
+      padding: 1.8em 2em 1.4em 2em;
+    }
+    h1 {
+      color: #3066b5;
+      font-size: 2em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.01em;
+    }
+    ul {
+      margin-top: 0.7em;
+      margin-bottom: 1.1em;
+      padding-left: 1.1em;
+    }
+    ul li {
+      margin-bottom: 0.4em;
+      font-size: 1.08em;
+      line-height: 1.5;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1.1em;
+      background: #3066b5;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 11px 32px;
+      font-size: 1.1em;
+      cursor: pointer;
+      font-weight: 500;
+      box-shadow: 0 1px 7px #3066b51f;
+      transition: background 0.12s;
+      letter-spacing: 0.01em;
+    }
+    .btn:hover,
+    .btn:focus {
+      background: #18489b;
+      outline: none;
+    }
+    .note {
+      color: #888;
+      font-size: 1em;
+      margin-top: 1.1em;
+      margin-bottom: 0.6em;
+      display: block;
+    }
+    .logo {
+      display: block;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 0.6em auto;
+      border-radius: 14px;
+      box-shadow: 0 2px 6px #60aaff26;
+      background: #f8fafc;
+      object-fit: contain;
+    }
+    @media (max-width: 600px) {
+      body { padding: 14px 2vw; }
+      .section { padding: 1.0em 4vw 1.1em 4vw; }
+      h1 { font-size: 1.4em; }
+      .btn { font-size: 1em; padding: 10px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="section">
+    <img src="icon128.png" alt="Tab Time Tracker Logo" class="logo" />
+    <h1>Welcome to Tab Time Tracker!</h1>
+    <div class="note">
+      Thanks for installing <strong>Tab Time Tracker</strong>.<br>
+      Here’s what you can do:
+    </div>
+    <ul>
+      <li>✅ <b>See usage</b> by day and by website</li>
+      <li>⏲️ <b>Set daily time limits</b> for distractions</li>
+      <li>🚫 <b>Ignore domains</b> from being tracked</li>
+      <li>📤 <b>Export &amp; import</b> your data anytime</li>
+      <li>🔒 <b>Private:</b> All data is stored locally, never uploaded</li>
+    </ul>
+    <button class="btn" id="openOptionsBtn">Open Options</button>
+    <span class="note">
+      <b>Tip:</b> You can open Options anytime from the extension menu.
+    </span>
+    <span class="note">
+      Need help or want to report a bug? <a href="https://github.com/devvyyxyz/tab-time-tracker" target="_blank" style="color:#3066b5;text-decoration:underline;">Visit the GitHub page</a>
+    </span>
+  </div>
+  <script>
+    document.getElementById("openOptionsBtn").onclick = function() {
+      // Try browser API first (Firefox)
+      if (typeof browser !== "undefined" && browser.runtime && browser.runtime.openOptionsPage) {
+        browser.runtime.openOptionsPage();
+        return;
+      }
+      // Try Chrome API
+      if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.openOptionsPage) {
+        chrome.runtime.openOptionsPage();
+        return;
+      }
+      // Fallback: open options page directly
+      window.open((typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL)
+        ? chrome.runtime.getURL("options/options.html")
+        : "options/options.html", "_blank");
+    };
+  </script>
+</body>
+</html>

@@ -1,16 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-popup>
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <title>Tab Time Tracker</title>
-  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    body { min-width: 390px; padding: 13px 10px 10px 10px; }
+    .tab-bar { display: flex; margin-bottom: 12px; }
+    .tab { flex: 1 1 auto; text-align: center; padding: 9px 5px; cursor: pointer; border-radius: 6px 6px 0 0; background: #17181c; }
+    .tab.selected { color: #60aaff; background: #23242a; font-weight: bold; border-bottom: 2px solid #60aaff; }
+    .tab:not(.selected):hover { background: #20202e; }
+    #stats-summary { font-size: 14px; margin: 8px 0 10px 0; color: #9ab4f0; line-height: 1.3;}
+    #pie-wrap { display: flex; justify-content: center; align-items: center; margin: 10px 0 16px 0; }
+    #pieChart { background: #222; border-radius: 12px; box-shadow: 0 1px 8px #0002; }
+    .table-container { margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; background: #1e1e23; border-radius: 6px; }
+    th, td { padding: 8px 6px; text-align: left; }
+    th { color: #82aaff; font-weight: 600; background: #20202e;}
+    td { border-bottom: 1px solid #23242a; }
+    tr:last-child td { border-bottom: none; }
+    .remove-url-btn { background: none; color: #c84a4a; border: none; font-size: 17px; cursor: pointer; }
+    .remove-url-btn:hover { color: #fff; background: #361a1a; border-radius: 5px; }
+    .empty { color: #888; text-align: center; margin: 24px 0;}
+    #summary { text-align: right; margin-bottom: 0; color: #9ab4f0; font-size: 13px;}
+    .import-export-row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
+    .import-export-row button { flex: 1 1 0; }
+    #import-status { color: #60aaff; margin-top: 8px; font-size: 13px; text-align: right;}
+    @media (max-width: 420px) {
+      #pieChart { width: 150px !important; height: 150px !important;}
+      body { min-width: 310px; }
+    }
+    /* New section for quick actions in popup */
+    .quick-actions {
+      margin: 11px 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .quick-actions button {
+      padding: 6px 8px;
+      background: #3066b5;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-right: 4px;
+      margin-bottom: 2px;
+      min-width: 0;
+    }
+    .quick-actions button:hover { background: #18489b; }
+    .site-row.selected {
+      background: #264080 !important;
+      color: #fff;
+      font-weight: 500;
+      transition: background 0.15s, color 0.12s;
+    }
+    .site-row { cursor: pointer; }
+    .quick-actions .small-note { margin-top: 0.2em; color: #82aaff;}
+    .quick-actions .link { color:#60aaff; cursor:pointer; text-decoration:underline; font-size:0.98em; }
+  </style>
 </head>
-<body>
-  <h2>Tab Time Tracker</h2>
-  <div id="summary"></div>
-  <div id="chart"></div>
-  <button id="clear">Clear All</button>
-  <script src="../utils/timeUtils.js"></script>
-  <script src="popup.js"></script>
+<body data-popup>
+  <div class="tab-bar">
+    <div class="tab selected" data-tab="all">All Time</div>
+    <div class="tab" data-tab="today">Today</div>
+    <div class="tab" data-tab="past">Past</div>
+    <div class="tab" data-tab="settings">Settings</div>
+  </div>
+  <div id="tab-content">
+    <!-- Populated by JS -->
+  </div>
+  <div class="quick-actions" id="quick-actions" style="display:none">
+    <button id="ignoreThisSiteBtn">Ignore This Site</button>
+    <button id="addLimitThisSiteBtn">Add Daily Limit</button>
+  </div>
+  <script type="module" src="./popup.js"></script>
 </body>
 </html>

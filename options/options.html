@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tab Time Tracker – Options</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <style>
+    body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 28px 12px 40px 12px;
+      font-family: system-ui, sans-serif;
+      background: #f8fafc;
+      color: #1a222c;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 0.7em;
+      letter-spacing: 0.02em;
+      font-size: 2.1em;
+    }
+    h2 {
+      margin-top: 2.2em;
+      font-size: 1.35em;
+      letter-spacing: 0.01em;
+      color: #3066b5;
+      border-left: 4px solid #3066b5;
+      padding-left: 8px;
+      margin-bottom: 0.5em;
+    }
+    .section {
+      background: #fff;
+      border-radius: 13px;
+      box-shadow: 0 2px 12px rgba(48,102,181,0.07), 0 0.5px 1px rgba(0,0,0,0.02);
+      margin-bottom: 2.2em;
+      padding: 1.2em 1.45em 1.3em 1.45em;
+      transition: box-shadow 0.15s;
+      position: relative;
+    }
+    .section:hover {
+      box-shadow: 0 4px 18px 2px rgba(48,102,181,0.13), 0 1px 2px rgba(0,0,0,0.03);
+    }
+    label {
+      font-weight: 500;
+      color: #18489b;
+      margin-right: 6px;
+    }
+    .inline { display: inline-block; }
+    .url { max-width: 220px; word-break: break-all; color: #3066b5; cursor: pointer; text-decoration: underline; }
+    #trendChart, #siteTrendChart { width: 100%; max-width: 560px; height: 180px; display: block; margin-bottom: 0.5em; background: #fff; border-radius: 6px; box-shadow: 0 0.5px 2px rgba(48,102,181,0.05);}
+    #trendChartLoading { font-size: 16px; margin-bottom: 10px; }
+    #top-sites-pagination { margin: 8px 0 20px 0; text-align: center; }
+    #topSitesSearch { margin-bottom: 5px; padding: 6px 9px; width: 230px; font-size: 15px; border-radius: 7px; border: 1px solid #bcc7d9;}
+    #topSitesSearch:focus { outline: 2px solid #3066b5; border-color: #3066b5;}
+    .small-note { color: #888; font-size: 13px; }
+    .success { color: #227a21; font-weight: 500;}
+    .danger { color: #b23; }
+    .empty { color: #888; text-align: center;}
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 14px 0 8px 0;
+      background: #f9fbfd;
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 15px;
+    }
+    th, td {
+      border: 1px solid #e4e7ef;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #eaf3fb;
+      font-weight: 600;
+      color: #18489b;
+    }
+    tr:nth-child(even) td {
+      background: #f6fafd;
+    }
+    tr:last-child td { border-bottom: 1px solid #e4e7ef;}
+    button, input[type=number], input[type=text], input[type=date], textarea, select {
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #bcc7d9;
+      padding: 6px 12px;
+      margin: 2px 2px 2px 0;
+      background: #f8fafc;
+      color: #1a222c;
+      transition: border 0.18s;
+    }
+    button {
+      background: #3066b5;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 500;
+      border: none;
+      padding: 6px 18px;
+      margin-top: 1px;
+      margin-right: 7px;
+      margin-bottom: 2px;
+      transition: background 0.17s;
+    }
+    button:hover, button:focus {
+      background: #18489b;
+      outline: none;
+    }
+    button.danger {
+      background: #e15c4b;
+    }
+    button.danger:hover, button.danger:focus {
+      background: #be2d00;
+    }
+    textarea {
+      width: 98%;
+      min-height: 80px;
+      resize: vertical;
+      font-family: inherit;
+      border: 1px solid #bcc7d9;
+    }
+    textarea:focus, input:focus, select:focus {
+      outline: 2px solid #3066b5;
+      border-color: #3066b5;
+    }
+    .input-error {
+      border: 2px solid #be2d00 !important;
+      background: #fff5f3 !important;
+    }
+    .error-message {
+      color: #be2d00; font-size: 13px; margin-left: 8px;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 32px;
+      background: #18489b;
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 9px;
+      font-size: 1.05em;
+      z-index: 10000;
+      display: none;
+      opacity: 0.96;
+      pointer-events: none;
+      box-shadow: 0 2px 12px rgba(48,102,181,0.19);
+      transition: opacity 0.2s;
+      text-align: center;
+      min-width: 180px;
+      max-width: 80vw;
+    }
+    .toast.error { background: #be2d00; }
+    details.faq {
+      margin-top: 1.2em;
+      margin-bottom: 1.2em;
+      padding: 1em 1.3em 1.1em 1.3em;
+      border-radius: 10px;
+      background: #f6fafd;
+      border: 1px solid #e4e7ef;
+      font-size: 1.05em;
+    }
+    summary.faq-title {
+      font-weight: bold;
+      font-size: 1.13em;
+      cursor: pointer;
+      outline: none;
+      color: #224b8a;
+    }
+    .flex-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 0.4em;
+    }
+    /* Modal styles */
+    .modal-bg {
+      display: none; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(30,40,60,0.24); z-index: 12345; align-items: center; justify-content: center;
+    }
+    .modal-bg.show { display: flex; }
+    .modal-content {
+      background: #fff; border-radius: 12px; padding: 24px 28px 20px 28px; box-shadow: 0 8px 28px rgba(48,102,181,0.12);
+      min-width: 320px; max-width: 95vw;
+      min-height: 220px;
+      max-height: 90vh;
+      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 12px; color: #3066b5; background: none; border: none; font-size: 1.5em; cursor: pointer; font-weight: bold;
+    }
+    .modal-domain-label { color: #18489b; font-size: 1.12em; margin-bottom: 0.7em; }
+    .dev-section {
+      background: #f6fafd;
+      border: 1px dashed #3066b5;
+      border-radius: 10px;
+      padding: 1.1em 1.3em 1em 1.3em;
+      margin: 2em 0 1.2em 0;
+    }
+    .dev-section h2 {
+      color: #888;
+      border: none;
+      padding-left: 0;
+      margin-top: 0;
+      font-size: 1.1em;
+      margin-bottom: 0.7em;
+    }
+    @media (max-width: 650px) {
+      #trendChart, #siteTrendChart { width: 98vw; min-width: 190px; }
+      body { padding: 7px; }
+      .section { padding: 0.7em 0.4em 1em 0.5em;}
+      .toast { font-size: 14px; left: 2vw; transform: none; min-width: 95vw; }
+      .modal-content { padding: 8px 4vw 6px 4vw; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tab Time Tracker <span style="font-size:0.6em;font-weight:400;letter-spacing:0.01em;">Options</span></h1>
+
+  <div id="toast" class="toast"></div>
+
+  <div class="section">
+    <h2>Statistics</h2>
+    <div class="flex-row">
+      <label for="rangeStart">From:</label>
+      <input id="rangeStart" type="date" />
+      <label for="rangeEnd">to</label>
+      <input id="rangeEnd" type="date" />
+      <button id="applyRangeBtn">Apply Range</button>
+      <span class="small-note" style="margin-left:18px;">Pick a custom date range for stats and table below.</span>
+    </div>
+    <div id="trendChartLoading" style="display:none;text-align:center;">Loading...</div>
+    <canvas id="trendChart" width="560" height="180" aria-label="Activity bar chart"
+      title="Shows your total tab usage for each day in selected range."></canvas>
+    <div class="flex-row">
+      <input id="topSitesSearch" placeholder="🔍 Search domain..." aria-label="Search top sites"
+        title="Type to filter the table below by domain." />
+      <button id="exportFilteredBtn" title="Export only the currently filtered table as a CSV file;">Export Filtered Data</button>
+    </div>
+    <table id="stats-table" aria-label="Top sites table"
+      title="Displays the domains you've spent the most time on for the selected period.">
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="2" style="text-align:center;">Loading...</td></tr>
+      </tbody>
+    </table>
+    <div id="top-sites-pagination"
+      title="Use these controls to page through your top sites, or to change how many are shown per page."></div>
+  </div>
+  <div id="modal-bg" class="modal-bg" tabindex="-1">
+    <div class="modal-content">
+      <button class="modal-close" id="modalCloseBtn" aria-label="Close">&times;</button>
+      <div class="modal-domain-label" id="modalDomain"></div>
+      <canvas id="siteTrendChart" width="500" height="170"></canvas>
+      <div class="small-note" style="margin-top:0.5em;">
+        Daily usage for selected site in chosen date range.
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Import / Export</h2>
+    <div class="flex-row">
+      <button id="exportBtn" title="Download all your tracked data as a JSON file.">Export All Data</button>
+      <button id="importBtn" title="Import tab usage data from a previously exported JSON file.">Import Data</button>
+      <input type="file" id="importFileInput" style="display:none" accept=".json" />
+      <span id="import-status" class="small-note"></span>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Data Retention</h2>
+    <div class="flex-row">
+      <label for="retentionDays">Retention Days:</label>
+      <input id="retentionDays" type="number" min="1" max="3650" style="width:90px;"
+        title="How many days of tab history to keep. Old data will be deleted automatically." />
+      <button id="saveRetentionBtn" title="Save your data retention preference.">Save</button>
+      <span id="retentionSaved" class="success" style="display:none;">Saved!</span>
+      <span id="retention-error" class="error-message" style="display:none;"></span>
+    </div>
+    <span class="small-note">Keep history for this many days (old data will be cleaned automatically).</span>
+  </div>
+  <div class="section">
+    <h2>Ignore List</h2>
+    <div>
+      <textarea id="ignoreList" rows="4" placeholder="One domain per line"
+        title="List domains (one per line) you want to ignore from tracking. Example: youtube.com"></textarea>
+    </div>
+    <div class="flex-row">
+      <button id="saveIgnoreBtn" title="Save the ignore list.">Save</button>
+      <span id="ignoreSaved" class="success" style="display:none;">Saved!</span>
+      <span id="ignore-error" class="error-message" style="display:none;"></span>
+    </div>
+    <span class="small-note">Sites listed here will be ignored in tracking. Example: <code>youtube.com</code></span>
+  </div>
+  <div class="section">
+    <h2>Time Limits</h2>
+    <form id="addLimitForm" style="margin-bottom:10px;">
+      <div class="flex-row">
+        <input id="limitDomain" type="text" placeholder="Domain (e.g. facebook.com)" required style="width:170px;"
+          title="Enter the domain to set a daily time limit for." />
+        <input id="limitMinutes" type="number" min="1" max="1440" placeholder="Minutes" required style="width:90px;"
+          title="How many minutes per day to allow for this domain." />
+        <button type="submit" title="Add this time limit.">Add Limit</button>
+        <span id="limitsSaved" class="success" style="display:none;">Saved!</span>
+        <span id="limits-error" class="error-message" style="display:none;"></span>
+      </div>
+    </form>
+    <table id="limits-table" aria-label="Time limits table"
+      title="Lists all domains with time limits and lets you remove them.">
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Minutes/day</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- populated by JS -->
+      </tbody>
+    </table>
+    <span class="small-note">You’ll get a notification if you exceed the daily limit for a site.</span>
+  </div>
+  <div class="section" style="display:flex; align-items:center; gap:24px; justify-content:space-between;">
+    <div>
+      <h2 style="margin-top:0;">Reset</h2>
+      <button id="resetDefaultsBtn" title="Restore all settings to their default values (does not delete your history).">Reset to Defaults</button>
+    </div>
+    <div>
+      <h2 style="margin-top:0;">Danger Zone</h2>
+      <button id="deleteAllBtn" class="danger"
+        title="Delete ALL tracked history and settings. This cannot be undone!">Delete ALL Data</button>
+      <span id="deleteStatus" class="success" style="margin-left:12px;"></span>
+      <div class="small-note">This wipes all tracked history and settings (cannot be undone).</div>
+    </div>
+  </div>
+  
+  <div class="dev-section">
+    <h2>Developers/Test Area</h2>
+    <button id="testNotifBtn" title="Show a test notification in the browser.">Test Notifications</button>
+    <span class="small-note">Sends a test notification using the extension's notification API.</span>
+
+    <span class="small-note">
+      <a href="#" id="openWelcomeLink">See Welcome/Onboarding</a>
+    </span>
+    <script>
+      document.getElementById("openWelcomeLink").onclick = function() {
+        window.open(browser.runtime.getURL("welcome.html"));
+        return false;
+      };
+    </script>
+  </div>
+  
+  <details class="faq" open>
+    <summary class="faq-title">Help & FAQ</summary>
+    <div style="margin-top:0.8em;">
+      <strong>What does this extension track?</strong><br>
+      It records your active tab usage time by domain, and lets you view stats, ignore certain sites, or set daily limits.
+      <br><br>
+      <strong>What does "Data Retention" mean?</strong><br>
+      This controls how many days of tab history are stored. Old data is deleted automatically.
+      <br><br>
+      <strong>How do I ignore a site?</strong><br>
+      Add each domain (e.g. <code>youtube.com</code>) on a new line in the Ignore List and click Save.
+      <br><br>
+      <strong>What does "Time Limits" do?</strong><br>
+      Set daily minute limits for any domain. You’ll get a notification if you exceed your limit.
+      <br><br>
+      <strong>How do I export/import data?</strong><br>
+      Use Export to download your full history/settings as a JSON file, or Import to restore from a JSON file.<br>
+      Use "Export Filtered Data" to download only the visible part of your top sites table as CSV.
+      <br><br>
+      <strong>What does "Reset to Defaults" do?</strong><br>
+      It restores your settings (ignore list, limits, retention, etc) to their defaults. Your usage history is NOT deleted.
+      <br><br>
+      <strong>I have a bug or feature request...</strong><br>
+      Please report it on the extension’s GitHub page.
+    </div>
+  </details>
+  <script src="options.js"></script>
+</body>
+</html>

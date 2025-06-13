@@ -1,9 +1,14 @@
+body[data-popup], html[data-popup] {
+  width: 420px;
+  min-width: 820px;
+  box-sizing: border-box;
+}
 body {
   font-family: system-ui, Arial, sans-serif;
-  min-width: 340px;
-  padding: 13px 10px 10px 10px;
   background: #17181c;
   color: #e6e6e6;
+  margin: 0;
+  padding: 0;
 }
 #summary {
   font-size: 15px;
@@ -75,13 +80,11 @@ body {
   font-weight: 500;
 }
 button {
-  margin-top: 13px;
-  width: 100%;
   background: #2563eb;
   color: #fff;
   border: none;
   border-radius: 7px;
-  padding: 8px 0;
+  padding: 8px 20px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -132,7 +135,6 @@ button:hover {
 .summary-time {
   color: #60aaff;
 }
-/* Per-URL remove (X) button styling */
 .remove-url-btn {
   position: absolute;
   right: 7px;
@@ -163,4 +165,42 @@ button:hover {
   background: #361a1a;
   border: 1.5px solid #c84a4a;
   color: #fff;
+}
+/* Options page specific */
+.options-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.options-heading {
+  color: #82aaff;
+  margin-top: 0;
+}
+.options-label {
+  font-size: 15px;
+  display: block;
+  margin-bottom: 8px;
+}
+.options-input-text {
+  background: #23242a;
+  color: #e6e6e6;
+  border: 1px solid #303040;
+  border-radius: 5px;
+  padding: 6px;
+  width: 100%;
+}
+.options-input-checkbox {
+  transform: scale(1.2);
+  margin-right: 6px;
+}
+.options-status {
+  margin-left: 10px;
+}
+hr {
+  border: none;
+  border-top: 1px solid #23242a;
+  margin: 24px 0;
+}
+ul {
+  margin-top: 0;
 }
